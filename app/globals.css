@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/*
+ * Palette du portfolio — source unique de vérité pour les couleurs.
+ * Exposée à Tailwind via @theme : bg-base, text-ink, border-line, etc.
+ */
+@theme {
+  --color-base: #0a0e24;
+  --color-base-alt: #0c1230;
+  --color-card: rgba(255, 255, 255, 0.02);
+  --color-card-hover: rgba(255, 255, 255, 0.05);
+  --color-line: rgba(255, 255, 255, 0.12);
+  --color-line-soft: rgba(255, 255, 255, 0.08);
+  --color-ink: #e8eaf2;
+  --color-muted: #8a90a8;
+  --color-violet-pale: #b6b2d6;
+  --color-status-green: #34d399;
+  --color-status-cyan: #38bdf8;
+  --color-status-yellow: #facc15;
+  --color-status-red: #f87171;
+  --color-status-violet: #a78bfa;
+
+  /* Polices injectées par next/font dans layout.tsx */
+  --font-display: var(--font-tomorrow);
+  --font-body: var(--font-red-hat);
+}
+
+body {
+  font-family: var(--font-body);
+  background: radial-gradient(1200px 600px at 50% -10%, var(--color-base-alt), var(--color-base));
+  background-color: var(--color-base);
+  color: var(--color-ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+}
