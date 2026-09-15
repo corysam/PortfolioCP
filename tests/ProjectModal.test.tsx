@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ProjectModal } from "@/components/ProjectModal";
-import { makeProject } from "./fixtures";
+import { emptyProject, makeProject } from "./fixtures";
 
 const twoLinks = makeProject({
   links: [
@@ -87,6 +87,50 @@ describe("ProjectModal", () => {
 
     rerender(<ProjectModal project={null} onClose={vi.fn()} />);
     expect(document.body.style.overflow).toBe("");
+  });
+
+  // Résilience : une rubrique vide disparaît, elle ne laisse pas un libellé orphelin.
+  it("masque les rubriques vides et ne garde que celles renseignées", () => {
+    render(
+      <ProjectModal
+        project={makeProject({ mission: "La mission.", problem: "", method: "", result: "" })}
+        onClose={vi.fn()}
+      />
+    );
+
+    expect(screen.getByText("Mission")).toBeInTheDocument();
+    expect(screen.getByText("La mission.")).toBeInTheDocument();
+    for (const label of ["Problem", "Method", "Result"]) {
+      expect(screen.queryByText(label)).not.toBeInTheDocument();
+    }
+  });
+
+  it("s'ouvre sur un projet entièrement vide sans rubrique ni statut", () => {
+    render(<ProjectModal project={emptyProject} onClose={vi.fn()} />);
+
+    expect(screen.getByRole("dialog")).toHaveAccessibleName("Movies Reco");
+    for (const label of ["Mission", "Problem", "Method", "Result"]) {
+      expect(screen.queryByText(label)).not.toBeInTheDocument();
+    }
+    expect(screen.queryAllByRole("link")).toHaveLength(0);
+    expect(screen.queryAllByRole("img")).toHaveLength(0);
+  });
+
+  it("écarte un lien sans URL au lieu de rendre une ancre morte", () => {
+    render(
+      <ProjectModal
+        project={makeProject({
+          links: [
+            { label: "Demo", href: "https://example.com/demo" },
+            { label: "Orphelin", href: "" },
+          ],
+        })}
+        onClose={vi.fn()}
+      />
+    );
+
+    expect(screen.getAllByRole("link")).toHaveLength(1);
+    expect(screen.queryByText("Orphelin")).not.toBeInTheDocument();
   });
 
   it("affiche les images du projet avec un alt utile", () => {

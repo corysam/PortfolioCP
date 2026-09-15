@@ -2,6 +2,9 @@ import type { ProjectStatus } from "@/lib/types";
 import { mix, statusColor } from "@/lib/types";
 
 export function StatusPill({ status }: { status: ProjectStatus }) {
+  // Statut non renseigné : pas de pastille vide (contenu en cours de rédaction).
+  if (!status) return null;
+
   const color = statusColor(status);
   return (
     <span

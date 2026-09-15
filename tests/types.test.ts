@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ACCENT_COLORS, STATUS_ACCENT, mix, statusColor } from "@/lib/types";
+import { ACCENT_COLORS, NEUTRAL_COLOR, STATUS_ACCENT, mix, statusColor } from "@/lib/types";
 import type { AccentName, ProjectStatus } from "@/lib/types";
 
 const ACCENTS: AccentName[] = ["green", "cyan", "yellow", "red", "violet"];
@@ -20,8 +20,15 @@ describe("couleurs (régression audit D2)", () => {
     expect(statusColor("In development")).toBe(ACCENT_COLORS.cyan);
   });
 
-  it("chaque statut possède une couleur résolue", () => {
+  it("chaque statut connu possède une couleur résolue", () => {
     for (const s of STATUSES) expect(statusColor(s)).toMatch(/^var\(--color-status-/);
+  });
+
+  // Un status libre ou absent ne doit jamais produire "undefined" dans le CSS.
+  it("retombe sur une couleur neutre pour un statut inconnu ou vide", () => {
+    expect(statusColor("Work in Progress")).toBe(NEUTRAL_COLOR);
+    expect(statusColor("")).toBe(NEUTRAL_COLOR);
+    expect(mix(statusColor(""), 33)).not.toContain("undefined");
   });
 
   // Remplace la concaténation hex "55"/"14", qui cassait sur rgb() ou hex court.

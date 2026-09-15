@@ -1,6 +1,14 @@
 // Types de contenu + helpers couleurs — importable côté client comme côté serveur.
 
-export type ProjectStatus = "Delivered" | "In development";
+/** Statuts dotés d'une couleur dédiée. */
+export type KnownProjectStatus = "Delivered" | "In development";
+
+/**
+ * Le contenu est rédigé à la main : un status libre ("Work in Progress") reste
+ * affiché tel quel, et une chaîne vide masque simplement la pastille.
+ * Les statuts connus gardent l'autocomplétion.
+ */
+export type ProjectStatus = KnownProjectStatus | (string & {});
 
 export type ProjectLink = { label: string; href: string };
 
@@ -62,12 +70,18 @@ export const ACCENT_COLORS: Record<AccentName, string> = {
 };
 
 /** Couleur dérivée du statut — une seule source de vérité (audit D2). */
-export const STATUS_ACCENT: Record<ProjectStatus, AccentName> = {
+export const STATUS_ACCENT: Record<KnownProjectStatus, AccentName> = {
   Delivered: "green",
   "In development": "cyan",
 };
 
-export const statusColor = (status: ProjectStatus) => ACCENT_COLORS[STATUS_ACCENT[status]];
+/** Repli pour un statut libre ou absent : jamais `undefined` dans le CSS. */
+export const NEUTRAL_COLOR = "var(--color-muted)";
+
+export const statusColor = (status: ProjectStatus) => {
+  const accent = STATUS_ACCENT[status as KnownProjectStatus];
+  return accent ? ACCENT_COLORS[accent] : NEUTRAL_COLOR;
+};
 
 /** Variante translucide d'une couleur (remplace les suffixes hex "55"/"14", audit D2). */
 export const mix = (color: string, percent: number) =>

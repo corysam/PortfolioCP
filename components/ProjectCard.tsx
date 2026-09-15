@@ -30,15 +30,19 @@ export function ProjectCard({
         <StatusPill status={project.status} />
         <ArrowUpRight
           size={18}
-          className="text-muted transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white"
+          // ml-auto : la flèche reste à droite même quand la pastille est absente.
+          className="ml-auto text-muted transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white"
         />
       </div>
 
+      {/* Un champ non renseigné n'affiche rien — pas un bloc vide avec ses marges. */}
       <h3 className="mt-5 text-xl text-ink">{project.name}</h3>
-      <p className="mt-1 text-sm text-muted">{project.role}</p>
-      <p className="mt-4 text-sm text-muted" style={{ lineHeight: 1.6 }}>
-        {project.description}
-      </p>
+      {project.role && <p className="mt-1 text-sm text-muted">{project.role}</p>}
+      {project.description && (
+        <p className="mt-4 text-sm text-muted" style={{ lineHeight: 1.6 }}>
+          {project.description}
+        </p>
+      )}
     </motion.button>
   );
 }

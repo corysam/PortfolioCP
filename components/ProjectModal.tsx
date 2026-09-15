@@ -7,12 +7,15 @@ import type { Project } from "@/lib/types";
 import { StatusPill } from "./StatusPill";
 import { ImageWithFallback } from "./ImageWithFallback";
 
-const rows = (p: Project) => [
-  { label: "Mission", text: p.mission },
-  { label: "Problem", text: p.problem },
-  { label: "Method", text: p.method },
-  { label: "Result", text: p.result },
-];
+// Seules les rubriques renseignées sont rendues : un libellé sans texte
+// donnerait l'impression d'une fiche cassée.
+const rows = (p: Project) =>
+  [
+    { label: "Mission", text: p.mission },
+    { label: "Problem", text: p.problem },
+    { label: "Method", text: p.method },
+    { label: "Result", text: p.result },
+  ].filter((row) => row.text);
 
 export function ProjectModal({
   project,
@@ -32,6 +35,10 @@ export function ProjectModal({
       window.removeEventListener("keydown", onKey);
     };
   }, [project, onClose]);
+
+  // Calculés hors du JSX : ils décident aussi de l'affichage du séparateur.
+  const detailRows = project ? rows(project) : [];
+  const links = project ? project.links.filter((l) => l.label && l.href) : [];
 
   return (
     <AnimatePresence>
@@ -60,7 +67,7 @@ export function ProjectModal({
                 onClick={onClose}
                 whileHover={{ rotate: 90, scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                className="grid h-9 w-9 place-items-center rounded-full text-muted transition-colors hover:text-white"
+                className="ml-auto grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted transition-colors hover:text-white"
                 aria-label="Fermer"
               >
                 <X size={18} />
@@ -70,27 +77,32 @@ export function ProjectModal({
             <h2 id="project-modal-title" className="mt-4 text-3xl text-ink">
               {project.name}
             </h2>
-            <p className="mt-1 text-sm text-muted">{project.role}</p>
-            <div className="my-5 h-px w-full bg-line-soft" />
+            {project.role && <p className="mt-1 text-sm text-muted">{project.role}</p>}
 
-            <div className="flex flex-col gap-6">
-              {rows(project).map((r, i) => (
-                <motion.div
-                  key={r.label}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 + i * 0.07 }}
-                  className="grid gap-2 sm:grid-cols-[120px_1fr]"
-                >
-                  <p className="text-sm text-ink" style={{ fontFamily: "var(--font-display)" }}>
-                    {r.label}
-                  </p>
-                  <p className="text-sm text-muted" style={{ lineHeight: 1.6 }}>
-                    {r.text}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
+            {/* Aucune rubrique renseignée : pas de séparateur orphelin. */}
+            {detailRows.length > 0 && (
+              <>
+                <div className="my-5 h-px w-full bg-line-soft" />
+                <div className="flex flex-col gap-6">
+                  {detailRows.map((r, i) => (
+                    <motion.div
+                      key={r.label}
+                      initial={{ opacity: 0, x: -12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 + i * 0.07 }}
+                      className="grid gap-2 sm:grid-cols-[120px_1fr]"
+                    >
+                      <p className="text-sm text-ink" style={{ fontFamily: "var(--font-display)" }}>
+                        {r.label}
+                      </p>
+                      <p className="text-sm text-muted" style={{ lineHeight: 1.6 }}>
+                        {r.text}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+              </>
+            )}
 
             {project.images.length > 0 && (
               <div className="mt-7 grid gap-4 sm:grid-cols-2">
@@ -113,9 +125,9 @@ export function ProjectModal({
             )}
 
             {/* Tous les liens du projet, pas seulement le premier (audit B3) */}
-            {project.links.length > 0 && (
+            {links.length > 0 && (
               <div className="mt-7 flex flex-wrap justify-center gap-3">
-                {project.links.map((link) => (
+                {links.map((link) => (
                   <motion.a
                     key={link.label}
                     href={link.href}

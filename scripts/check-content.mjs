@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 // Garde-fou pré-lancement (audit M5 / D3) : détecte le contenu encore
-// "placeholder" dans content/. Volontairement séparé de `npm run build` —
-// le site doit rester constructible pendant la rédaction du contenu.
+// "placeholder" ou incomplet dans content/. Volontairement séparé de
+// `npm run build` — le site doit rester constructible pendant la rédaction du
+// contenu : les loaders tolèrent les champs vides, c'est ici qu'on les signale.
 //
 //   npm run check:content   → code de sortie 1 s'il reste des placeholders.
 
 import fs from "fs";
 import path from "path";
+import matter from "gray-matter";
 
 const contentDir = path.join(process.cwd(), "content");
 const findings = [];
@@ -65,6 +67,42 @@ if (fs.existsSync(labPath)) {
   for (const [projectId, ids] of byProject) {
     if (ids.length > 1) {
       report("content/lab.json", `bulles ${ids.join(", ")} ouvrent toutes "${projectId}"`);
+    }
+  }
+}
+
+// 4. Projets : champs de frontmatter encore vides. Le build les tolère
+// (la carte n'affiche simplement rien) — c'est ce rapport qui les rappelle.
+const PROJECT_FIELDS = [
+  "name",
+  "status",
+  "role",
+  "description",
+  "mission",
+  "problem",
+  "method",
+  "result",
+];
+const KNOWN_STATUSES = ["Delivered", "In development"];
+
+const projectsDir = path.join(contentDir, "projects");
+if (fs.existsSync(projectsDir)) {
+  for (const file of fs.readdirSync(projectsDir).filter((f) => f.endsWith(".md"))) {
+    const rel = path.join("content", "projects", file);
+    const { data } = matter(fs.readFileSync(path.join(projectsDir, file), "utf8"));
+
+    const empty = PROJECT_FIELDS.filter((f) => String(data[f] ?? "").trim() === "");
+    if (empty.length > 0) report(rel, `champ(s) encore vide(s) : ${empty.join(", ")}`);
+
+    const status = String(data.status ?? "").trim();
+    if (status !== "" && !KNOWN_STATUSES.includes(status)) {
+      report(rel, `status "${status}" sans couleur dédiée — pastille neutre (connus : ${KNOWN_STATUSES.join(" | ")})`);
+    }
+
+    for (const [i, link] of (Array.isArray(data.links) ? data.links : []).entries()) {
+      if (!String(link?.label ?? "").trim() || !String(link?.href ?? "").trim()) {
+        report(rel, `links[${i}] incomplet (label + href requis) — lien masqué`);
+      }
     }
   }
 }

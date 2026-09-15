@@ -69,16 +69,94 @@ describe("getProjects", () => {
     });
     expect(getProjects(dir)).toHaveLength(1);
   });
+});
 
-  // Le contenu est édité à la main : une erreur doit casser le build, pas la page.
-  it("échoue si un champ obligatoire manque", () => {
-    const dir = makeContentDir({ "projects/a.md": projectMd({ mission: undefined }) });
-    expect(() => getProjects(dir)).toThrow(/champ frontmatter manquant "mission"/);
+// Le contenu s'écrit au fil de l'eau : un projet à moitié rempli doit se charger
+// (le champ vide ne s'affiche simplement pas), pas casser le build.
+// `npm run check:content` reste le garde-fou qui signale ce qui manque.
+describe("getProjects — contenu incomplet", () => {
+  const emptyFrontmatter =
+    "---\nname:\nstatus:\nrole:\ndescription:\nmission:\nproblem:\nmethod:\nresult:\nlinks:\nimages:\n---\n";
+
+  it("charge un projet dont un champ est vide au lieu de planter", () => {
+    const dir = makeContentDir({ "projects/a.md": projectMd({ mission: "", problem: undefined }) });
+
+    const [p] = getProjects(dir);
+
+    expect(p.mission).toBe("");
+    expect(p.problem).toBe("");
+    expect(p.description).toBe("Une description.");
   });
 
-  it("échoue si le status est invalide", () => {
-    const dir = makeContentDir({ "projects/a.md": projectMd({ status: "Shipped" }) });
-    expect(() => getProjects(dir)).toThrow(/status "Shipped" invalide/);
+  it("charge un projet dont le frontmatter est entièrement vide", () => {
+    const dir = makeContentDir({ "projects/movies-reco.md": emptyFrontmatter });
+
+    const [p] = getProjects(dir);
+
+    expect(p.id).toBe("movies-reco");
+    expect(p.status).toBe("");
+    expect(p.role).toBe("");
+    expect(p.mission).toBe("");
+    expect(p.links).toEqual([]);
+    expect(p.images).toEqual([]);
+    expect(p.order).toBe(999);
+    expect(p.lab).toBe(false);
+  });
+
+  // Une carte sans titre serait un rectangle vide impossible à identifier :
+  // l'id du fichier sert de nom de repli.
+  it("retombe sur l'id du fichier quand le nom est vide", () => {
+    const dir = makeContentDir({ "projects/movies-reco.md": emptyFrontmatter });
+    expect(getProjects(dir)[0].name).toBe("Movies Reco");
+  });
+
+  it("conserve un status hors liste au lieu de le rejeter", () => {
+    const dir = makeContentDir({ "projects/a.md": projectMd({ status: "Work in Progress" }) });
+    expect(getProjects(dir)[0].status).toBe("Work in Progress");
+  });
+
+  it("normalise les valeurs en texte et retire les espaces superflus", () => {
+    const dir = makeContentDir({
+      "projects/a.md": projectMd({ role: "  Développeur  ", result: 42, method: null }),
+    });
+
+    const [p] = getProjects(dir);
+
+    expect(p.role).toBe("Développeur");
+    expect(p.result).toBe("42");
+    expect(p.method).toBe("");
+  });
+
+  it("écarte les liens auxquels il manque un libellé ou une URL", () => {
+    const dir = makeContentDir({
+      "projects/a.md": projectMd({
+        links: [
+          { label: "Demo", href: "https://example.com/demo" },
+          { label: "GitHub" },
+          { href: "https://example.com/orphelin" },
+          { label: "  ", href: "  " },
+        ],
+      }),
+    });
+
+    expect(getProjects(dir)[0].links).toEqual([
+      { label: "Demo", href: "https://example.com/demo" },
+    ]);
+  });
+
+  it("écarte les images vides", () => {
+    const dir = makeContentDir({
+      "projects/a.md": projectMd({ images: ["/a.svg", "", null, "  "] }),
+    });
+    expect(getProjects(dir)[0].images).toEqual(["/a.svg"]);
+  });
+
+  it("ignore un 'order' non numérique plutôt que de casser le tri", () => {
+    const dir = makeContentDir({
+      "projects/a.md": projectMd({ name: "A", order: "pas un nombre" }),
+      "projects/b.md": projectMd({ name: "B", order: 1 }),
+    });
+    expect(getProjects(dir).map((p) => p.name)).toEqual(["B", "A"]);
   });
 });
 

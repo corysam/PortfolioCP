@@ -63,3 +63,16 @@ export const stack: StackRow[] = [
 export const recommendations: Recommendation[] = [
   { id: "r1", name: "Alice", role: "CTO", text: "Très bon travail." },
 ];
+
+/** Projet tout juste créé : seul le fichier existe, aucun champ n'est rempli. */
+export const emptyProject = makeProject({
+  id: "movies-reco",
+  name: "Movies Reco",
+  status: "",
+  role: "",
+  description: "",
+  mission: "",
+  problem: "",
+  method: "",
+  result: "",
+});
