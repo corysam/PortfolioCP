@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Mail, Phone, Linkedin, Download, ChevronDown, Check } from "lucide-react";
 import type { Profile } from "@/lib/types";
+import type { SectionId } from "@/lib/sections";
 
 type Social =
   | { Icon: typeof Mail; label: string; type: "copy"; value: string }
@@ -35,6 +36,9 @@ async function copyToClipboard(value: string): Promise<boolean> {
   }
 }
 
+// Ancré sur SECTIONS : renommer l'id côté nav casse la compilation ici (audit D4).
+const SECTION_ID: SectionId = "home";
+
 export function Hero({ profile }: { profile: Profile }) {
   const [copied, setCopied] = useState<string | null>(null);
   const copiedTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -65,7 +69,7 @@ export function Hero({ profile }: { profile: Profile }) {
 
   return (
     <section
-      id="home"
+      id={SECTION_ID}
       className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center px-5 text-center sm:px-6 md:items-start md:text-left"
     >
       <motion.p

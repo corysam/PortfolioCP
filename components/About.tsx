@@ -1,10 +1,14 @@
 "use client";
 
 import { motion } from "motion/react";
+import type { SectionId } from "@/lib/sections";
+
+// Ancré sur SECTIONS : renommer l'id côté nav casse la compilation ici (audit D4).
+const SECTION_ID: SectionId = "about";
 
 export function About({ paragraphs, expertises }: { paragraphs: string[]; expertises: string[] }) {
   return (
-    <section id="about" className="mx-auto w-full max-w-5xl px-5 sm:px-6 py-20 sm:py-28 scroll-mt-24">
+    <section id={SECTION_ID} className="mx-auto w-full max-w-5xl px-5 sm:px-6 py-20 sm:py-28 scroll-mt-24">
       <div className="grid gap-10 md:grid-cols-[380px_1fr] md:items-start">
         {/* Photo agrandie à gauche */}
         <motion.div

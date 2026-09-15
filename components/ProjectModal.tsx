@@ -44,6 +44,9 @@ export function ProjectModal({
           onClick={onClose}
         >
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-modal-title"
             onClick={(e) => e.stopPropagation()}
             initial={{ opacity: 0, scale: 0.94, y: 24 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -64,7 +67,9 @@ export function ProjectModal({
               </motion.button>
             </div>
 
-            <h2 className="mt-4 text-3xl text-ink">{project.name}</h2>
+            <h2 id="project-modal-title" className="mt-4 text-3xl text-ink">
+              {project.name}
+            </h2>
             <p className="mt-1 text-sm text-muted">{project.role}</p>
             <div className="my-5 h-px w-full bg-line-soft" />
 

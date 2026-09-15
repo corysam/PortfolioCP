@@ -6,7 +6,8 @@ import path from "path";
 import matter from "gray-matter";
 import type { Lab, Profile, Project, ProjectStatus, Recommendation, StackRow } from "./types";
 
-const contentDir = path.join(process.cwd(), "content");
+/** Racine du contenu. Paramétrable pour permettre de tester sur des fixtures. */
+const defaultContentDir = () => path.join(process.cwd(), "content");
 
 const PROJECT_STATUSES: ProjectStatus[] = ["Delivered", "In development"];
 const REQUIRED_PROJECT_FIELDS = [
@@ -20,11 +21,11 @@ const REQUIRED_PROJECT_FIELDS = [
   "result",
 ] as const;
 
-function readJson<T>(file: string): T {
+function readJson<T>(contentDir: string, file: string): T {
   return JSON.parse(fs.readFileSync(path.join(contentDir, file), "utf8")) as T;
 }
 
-export function getProjects(): Project[] {
+export function getProjects(contentDir: string = defaultContentDir()): Project[] {
   const dir = path.join(contentDir, "projects");
   return fs
     .readdirSync(dir)
@@ -63,8 +64,8 @@ export function getProjects(): Project[] {
     .sort((a, b) => a.order - b.order);
 }
 
-export function getLab(projects: Project[]): Lab {
-  const lab = readJson<Lab>("lab.json");
+export function getLab(projects: Project[], contentDir: string = defaultContentDir()): Lab {
+  const lab = readJson<Lab>(contentDir, "lab.json");
   const projectIds = new Set(projects.map((p) => p.id));
   const nodeIds = new Set(lab.nodes.map((n) => n.id));
 
@@ -83,14 +84,14 @@ export function getLab(projects: Project[]): Lab {
   return { nodes: lab.nodes, edges };
 }
 
-export function getStack(): StackRow[] {
-  return readJson<StackRow[]>("stack.json");
+export function getStack(contentDir: string = defaultContentDir()): StackRow[] {
+  return readJson<StackRow[]>(contentDir, "stack.json");
 }
 
-export function getRecommendations(): Recommendation[] {
-  return readJson<Recommendation[]>("recommendations.json");
+export function getRecommendations(contentDir: string = defaultContentDir()): Recommendation[] {
+  return readJson<Recommendation[]>(contentDir, "recommendations.json");
 }
 
-export function getProfile(): Profile {
-  return readJson<Profile>("profile.json");
+export function getProfile(contentDir: string = defaultContentDir()): Profile {
+  return readJson<Profile>(contentDir, "profile.json");
 }
