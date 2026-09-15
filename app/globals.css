@@ -2,11 +2,11 @@
 
 /*
  * Palette du portfolio — source unique de vérité pour les couleurs.
- * Exposée à Tailwind via @theme : bg-base, text-ink, border-line, etc.
+ * Exposée à Tailwind via @theme : bg-canvas, text-ink, border-line, etc.
  */
 @theme {
-  --color-base: #0a0e24;
-  --color-base-alt: #0c1230;
+  --color-canvas: #0a0e24;
+  --color-canvas-alt: #0c1230;
   --color-card: rgba(255, 255, 255, 0.02);
   --color-card-hover: rgba(255, 255, 255, 0.05);
   --color-line: rgba(255, 255, 255, 0.12);
@@ -27,8 +27,8 @@
 
 body {
   font-family: var(--font-body);
-  background: radial-gradient(1200px 600px at 50% -10%, var(--color-base-alt), var(--color-base));
-  background-color: var(--color-base);
+  background: radial-gradient(1200px 600px at 50% -10%, var(--color-canvas-alt), var(--color-canvas));
+  background-color: var(--color-canvas);
   color: var(--color-ink);
   min-height: 100vh;
   overflow-x: hidden;

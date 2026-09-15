@@ -59,7 +59,7 @@ export function ProjectModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 16 }}
             transition={{ type: "spring", stiffness: 280, damping: 28 }}
-            className="my-auto w-full max-w-2xl rounded-3xl border border-line bg-base-alt p-7 shadow-[0_30px_80px_rgba(0,0,0,0.5)] sm:p-9"
+            className="my-auto w-full max-w-2xl rounded-3xl border border-line bg-canvas-alt p-7 shadow-[0_30px_80px_rgba(0,0,0,0.5)] sm:p-9"
           >
             <div className="flex items-start justify-between gap-4">
               <StatusPill status={project.status} />

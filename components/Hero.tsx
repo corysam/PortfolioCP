@@ -148,7 +148,7 @@ export function Hero({ profile }: { profile: Profile }) {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 6, scale: 0.96 }}
                       transition={{ duration: 0.18 }}
-                      className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-line bg-base-alt px-3 py-2 text-xs"
+                      className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-line bg-canvas-alt px-3 py-2 text-xs"
                     >
                       <span className="block text-ink">{s.value}</span>
                       <span className="mt-0.5 flex items-center gap-1 text-status-green">

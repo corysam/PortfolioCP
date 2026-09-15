@@ -18,7 +18,7 @@ export function LabBubble({
     <motion.button
       onClick={onClick}
       whileTap={{ scale: 0.97 }}
-      className="flex items-center gap-2.5 rounded-full border border-line bg-base py-1.5 pl-1.5 pr-4 transition-colors hover:border-white"
+      className="flex items-center gap-2.5 rounded-full border border-line bg-canvas py-1.5 pl-1.5 pr-4 transition-colors hover:border-white"
       {...motionProps}
     >
       <span
