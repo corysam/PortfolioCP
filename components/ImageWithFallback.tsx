@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ImageOff } from "lucide-react";
 
 export function ImageWithFallback({
@@ -13,9 +13,15 @@ export function ImageWithFallback({
   className?: string;
 }) {
   const [didError, setDidError] = useState(false);
+  const [renderedSrc, setRenderedSrc] = useState(src);
 
-  // L'état d'erreur suit la source : un échec passé ne condamne pas la suivante.
-  useEffect(() => setDidError(false), [src]);
+  // L'état d'erreur suit la source : un échec passé ne condamne pas la suivante
+  // (audit U1). L'ajustement se fait pendant le rendu plutôt que dans un effet,
+  // ce qui évite un rendu en cascade (react-hooks/set-state-in-effect).
+  if (src !== renderedSrc) {
+    setRenderedSrc(src);
+    setDidError(false);
+  }
 
   if (didError) {
     return (

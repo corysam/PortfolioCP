@@ -1,8 +1,16 @@
 # Portfolio — Clément Pellat
 
-Site portfolio statique, construit avec **Next.js 15** (App Router, `output: "export"`),
+Site portfolio statique, construit avec **Next.js 16** (App Router, `output: "export"`),
 **React 19**, **Tailwind CSS 4** et **Motion**. Tout le contenu vit dans `content/`
 et est lu au moment du build : il n'y a ni base de données, ni API, ni serveur à l'exécution.
+
+## Prérequis
+
+**Node.js >= 22.12** (testé sur la LTS 24). La version est épinglée dans `.nvmrc` :
+
+```bash
+nvm use              # bascule sur la version du projet
+```
 
 ## Démarrer
 
