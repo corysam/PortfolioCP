@@ -1,26 +1,28 @@
-[
-  {
-    "id": "r1",
-    "name": "Nom Prénom",
-    "role": "Role - Entreprise - Client",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum."
-  },
-  {
-    "id": "r2",
-    "name": "Nom Prénom",
-    "role": "Role - Entreprise - Client",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum."
-  },
-  {
-    "id": "r3",
-    "name": "Nom Prénom",
-    "role": "Role - Entreprise - Client",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum."
-  },
-  {
-    "id": "r4",
-    "name": "Nom Prénom",
-    "role": "Role - Entreprise - Client",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum."
-  }
-]
+{
+  "items": [
+    {
+      "id": "r1",
+      "name": "Nom Prénom",
+      "role": "Role - Entreprise - Client",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum."
+    },
+    {
+      "id": "r2",
+      "name": "Nom Prénom",
+      "role": "Role - Entreprise - Client",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum."
+    },
+    {
+      "id": "r3",
+      "name": "Nom Prénom",
+      "role": "Role - Entreprise - Client",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum."
+    },
+    {
+      "id": "r4",
+      "name": "Nom Prénom",
+      "role": "Role - Entreprise - Client",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum."
+    }
+  ]
+}

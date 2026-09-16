@@ -155,13 +155,31 @@ Expected: PASS, all suites. The `contenu réel du dépôt` test in `tests/conten
 
 Run: `nvm use && npm run build`
 
-Expected: build succeeds. Confirm the Laboratory graph still has its six connecting lines:
+Expected: build succeeds.
+
+Then prove the rendered page is unchanged, rather than grepping for markers —
+the export is minified onto one line and embeds the RSC payload, so counting
+occurrences is unreliable. Build the baseline from `HEAD` and diff:
 
 ```bash
-grep -c '<line' out/index.html
+cp out/index.html /tmp/after.html
+git stash push -m baseline -- content lib tests
+npm run build && cp out/index.html /tmp/before.html
+git stash pop
 ```
 
-Expected: `6`.
+Next stamps a random build id into every export, so normalise it before
+comparing:
+
+```bash
+python3 -c "
+import re
+norm = lambda p: re.sub(r'\\\\\"b\\\\\":\\\\\"[A-Za-z0-9_-]{21}\\\\\"', 'BUILDID', open(p,encoding='utf8').read())
+print('identique :', norm('/tmp/before.html') == norm('/tmp/after.html'))
+"
+```
+
+Expected: `identique : True`.
 
 - [ ] **Step 7: Commit**
 

@@ -4,7 +4,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import type { Lab, Profile, Project, ProjectLink, Recommendation, StackRow } from "./types";
+import type { Lab, LabNode, Profile, Project, ProjectLink, Recommendation, StackRow } from "./types";
 
 /** Racine du contenu. Paramétrable pour permettre de tester sur des fixtures. */
 const defaultContentDir = () => path.join(process.cwd(), "content");
@@ -84,8 +84,15 @@ export function getProjects(contentDir: string = defaultContentDir()): Project[]
     .sort((a, b) => a.order - b.order);
 }
 
+// ---- Formes sur disque ----------------------------------------------------
+// Le CMS ne sait pas éditer un tableau JSON racine ni un tuple : les fichiers
+// portent une enveloppe. Elle s'arrête ici — les loaders renvoient les types
+// du domaine, inchangés.
+
+type LabFile = { nodes: LabNode[]; edges: { from: string; to: string }[] };
+
 export function getLab(projects: Project[], contentDir: string = defaultContentDir()): Lab {
-  const lab = readJson<Lab>(contentDir, "lab.json");
+  const lab = readJson<LabFile>(contentDir, "lab.json");
   const projectIds = new Set(projects.map((p) => p.id));
   const nodeIds = new Set(lab.nodes.map((n) => n.id));
 
@@ -95,21 +102,23 @@ export function getLab(projects: Project[], contentDir: string = defaultContentD
     }
   }
   // Une arête vers un id inconnu est ignorée (avec avertissement) au lieu de faire planter le rendu.
-  const edges = lab.edges.filter(([a, b]) => {
-    const valid = nodeIds.has(a) && nodeIds.has(b);
-    if (!valid) console.warn(`content/lab.json : arête ignorée [${a}, ${b}] — id de bulle inconnu`);
-    return valid;
-  });
+  const edges = lab.edges
+    .map(({ from, to }) => [from, to] as [string, string])
+    .filter(([a, b]) => {
+      const valid = nodeIds.has(a) && nodeIds.has(b);
+      if (!valid) console.warn(`content/lab.json : arête ignorée [${a}, ${b}] — id de bulle inconnu`);
+      return valid;
+    });
 
   return { nodes: lab.nodes, edges };
 }
 
 export function getStack(contentDir: string = defaultContentDir()): StackRow[] {
-  return readJson<StackRow[]>(contentDir, "stack.json");
+  return readJson<{ rows: StackRow[] }>(contentDir, "stack.json").rows;
 }
 
 export function getRecommendations(contentDir: string = defaultContentDir()): Recommendation[] {
-  return readJson<Recommendation[]>(contentDir, "recommendations.json");
+  return readJson<{ items: Recommendation[] }>(contentDir, "recommendations.json").items;
 }
 
 export function getProfile(contentDir: string = defaultContentDir()): Profile {

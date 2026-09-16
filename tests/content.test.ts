@@ -170,7 +170,7 @@ describe("getLab", () => {
           { id: "n1", label: "A", category: "IA", accent: "violet", x: 0, y: 0, projectId: "lab-a" },
           { id: "n2", label: "B", category: "Jeu", accent: "red", x: 1, y: 1, projectId: "lab-a" },
         ],
-        edges: [["n1", "n2"]],
+        edges: [{ from: "n1", to: "n2" }],
       }),
     });
     expect(getLab(projects(), dir).edges).toEqual([["n1", "n2"]]);
@@ -183,8 +183,8 @@ describe("getLab", () => {
       "lab.json": JSON.stringify({
         nodes: [{ id: "n1", label: "A", category: "IA", accent: "violet", x: 0, y: 0, projectId: "lab-a" }],
         edges: [
-          ["n1", "n1"],
-          ["n1", "n99"],
+          { from: "n1", to: "n1" },
+          { from: "n1", to: "n99" },
         ],
       }),
     });
@@ -209,8 +209,8 @@ describe("getLab", () => {
 describe("loaders JSON", () => {
   it("lit stack, recommendations et profile", () => {
     const dir = makeContentDir({
-      "stack.json": JSON.stringify([{ label: "Back End", accent: "green", items: ["Node.js"] }]),
-      "recommendations.json": JSON.stringify([{ id: "r1", name: "Alice", role: "CTO", text: "Top." }]),
+      "stack.json": JSON.stringify({ rows: [{ label: "Back End", accent: "green", items: ["Node.js"] }] }),
+      "recommendations.json": JSON.stringify({ items: [{ id: "r1", name: "Alice", role: "CTO", text: "Top." }] }),
       "profile.json": JSON.stringify({ name: "Test", resume: null }),
     });
     expect(getStack(dir)[0].items).toEqual(["Node.js"]);

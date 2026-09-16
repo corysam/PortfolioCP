@@ -1,17 +1,19 @@
-[
-  {
-    "label": "Back End",
-    "accent": "green",
-    "items": ["Node.js", "Express", "PostgreSQL", "Prisma", "Redis", "Docker"]
-  },
-  {
-    "label": "UX / UI",
-    "accent": "cyan",
-    "items": ["Figma", "Framer", "Design Systems", "Prototyping", "Motion"]
-  },
-  {
-    "label": "Front End",
-    "accent": "yellow",
-    "items": ["React", "TypeScript", "Tailwind", "Next.js", "Vite", "Motion"]
-  }
-]
+{
+  "rows": [
+    {
+      "label": "Back End",
+      "accent": "green",
+      "items": ["Node.js", "Express", "PostgreSQL", "Prisma", "Redis", "Docker"]
+    },
+    {
+      "label": "UX / UI",
+      "accent": "cyan",
+      "items": ["Figma", "Framer", "Design Systems", "Prototyping", "Motion"]
+    },
+    {
+      "label": "Front End",
+      "accent": "yellow",
+      "items": ["React", "TypeScript", "Tailwind", "Next.js", "Vite", "Motion"]
+    }
+  ]
+}

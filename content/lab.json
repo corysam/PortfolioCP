@@ -7,11 +7,11 @@
     { "id": "n5", "label": "Titre", "category": "Jeu vidéo", "accent": "red", "x": 50, "y": 20, "projectId": "lab-generative-ui" }
   ],
   "edges": [
-    ["n1", "n2"],
-    ["n1", "n3"],
-    ["n2", "n3"],
-    ["n3", "n4"],
-    ["n4", "n5"],
-    ["n5", "n2"] 
+    { "from": "n1", "to": "n2" },
+    { "from": "n1", "to": "n3" },
+    { "from": "n2", "to": "n3" },
+    { "from": "n3", "to": "n4" },
+    { "from": "n4", "to": "n5" },
+    { "from": "n5", "to": "n2" }
   ]
 }
