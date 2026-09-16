@@ -33,13 +33,31 @@ npm run dev          # serveur de développement
 
 ## Déploiement
 
-Le build produit un site **entièrement statique** dans `out/`.
-Le serveur web (ou le reverse proxy) doit servir ce dossier — **jamais** le serveur
-de développement Next, qui n'est pas prévu pour être exposé publiquement.
+Le site est déployé sur **GitHub Pages** par `.github/workflows/deploy.yml`, à
+chaque push sur `main`. Le workflow passe `typecheck`, `lint` et les tests avant
+de builder : une modification de contenu qui casse le site échoue en CI plutôt
+qu'en production.
+
+Le dépôt est une *user page* (`corysam.github.io`), donc servi à la racine :
+**aucun `basePath` n'est nécessaire**, et les chemins absolus (`/projects/...`,
+`/resume.pdf`) fonctionnent tels quels.
+
+Réglage à faire une fois, dans les paramètres du dépôt :
+*Settings → Pages → Source → GitHub Actions*.
+
+`npm run check:content` n'est volontairement pas dans le workflow : il sort en
+code 1 tant qu'il reste du contenu placeholder, ce qui bloquerait tous les
+déploiements. C'est un outil manuel d'avant-lancement.
+
+Pour reproduire le build en local :
 
 ```bash
 npm run build        # génère out/
 ```
+
+Si `out/` est servi par un serveur web (ce n'est plus le cas en production),
+il faut servir **ce dossier** — jamais le serveur de développement Next, qui
+n'est pas prévu pour être exposé publiquement.
 
 ## Contenu
 
