@@ -1,0 +1,136 @@
+# Sveltia CMS — édite directement les fichiers de content/ via l'API GitHub.
+# Connexion : « Sign In with Token » avec un PAT fine-grained limité à ce dépôt.
+# Aucun backend, aucun worker : le jeton ne vit que dans le navigateur.
+
+backend:
+  name: github
+  repo: corysam/corysam.github.io
+  branch: main
+
+media_folder: public/projects
+public_folder: /projects
+
+collections:
+  - name: projects
+    label: Projets
+    label_singular: Projet
+    folder: content/projects
+    extension: md
+    create: true
+    # Le nom de fichier est l'`id` que dérive lib/content.ts.
+    identifier_field: name
+    slug: "{{slug}}"
+    fields:
+      - { name: name, label: Nom, widget: string }
+      - name: status
+        label: Statut
+        widget: select
+        required: false
+        options: ["Delivered", "In development"]
+      - { name: role, label: Rôle, widget: string, required: false }
+      - { name: order, label: Ordre d'affichage, widget: number, value_type: int, default: 999 }
+      - { name: lab, label: Projet Laboratory, widget: boolean, default: false }
+      - { name: description, label: Description courte, widget: text, required: false }
+      - { name: mission, label: Mission, widget: text, required: false }
+      - { name: problem, label: Problème, widget: text, required: false }
+      - { name: method, label: Méthode, widget: text, required: false }
+      - { name: result, label: Résultat, widget: text, required: false }
+      - name: links
+        label: Liens
+        widget: list
+        required: false
+        fields:
+          - { name: label, label: Libellé, widget: string }
+          - { name: href, label: URL, widget: string }
+      - name: images
+        label: Images
+        widget: list
+        required: false
+        field: { name: image, label: Image, widget: image }
+
+  - name: site
+    label: Contenu du site
+    files:
+      - name: profile
+        label: Profil
+        file: content/profile.json
+        fields:
+          - { name: name, label: Nom, widget: string }
+          - { name: tagline, label: Accroche, widget: text }
+          - { name: email, label: E-mail, widget: string }
+          - { name: phone, label: Téléphone, widget: string }
+          - { name: linkedin, label: LinkedIn, widget: string }
+          - name: resume
+            label: Chemin du CV dans public/ (ex. /resume.pdf)
+            widget: string
+            required: false
+          - name: about
+            label: Paragraphes « À propos »
+            widget: list
+            field: { name: paragraph, label: Paragraphe, widget: text }
+          - name: expertises
+            label: Expertises
+            widget: list
+            field: { name: item, label: Expertise, widget: string }
+
+      - name: stack
+        label: Stack
+        file: content/stack.json
+        fields:
+          - name: rows
+            label: Catégories
+            widget: list
+            fields:
+              - { name: label, label: Catégorie, widget: string }
+              - name: accent
+                label: Couleur
+                widget: select
+                options: [green, cyan, yellow, red, violet]
+              - name: items
+                label: Technologies
+                widget: list
+                field: { name: item, label: Technologie, widget: string }
+
+      - name: recommendations
+        label: Recommandations
+        file: content/recommendations.json
+        fields:
+          - name: items
+            label: Témoignages
+            widget: list
+            fields:
+              - { name: id, label: Identifiant, widget: string }
+              - { name: name, label: Nom, widget: string }
+              - { name: role, label: Rôle, widget: string }
+              - { name: text, label: Texte, widget: text }
+
+      - name: lab
+        label: Laboratory
+        file: content/lab.json
+        fields:
+          - name: nodes
+            label: Bulles
+            widget: list
+            fields:
+              - { name: id, label: Identifiant, widget: string }
+              - { name: label, label: Libellé, widget: string }
+              - { name: category, label: Catégorie, widget: string }
+              - name: accent
+                label: Couleur
+                widget: select
+                options: [green, cyan, yellow, red, violet]
+              - { name: x, label: Position X (%), widget: number, value_type: int }
+              - { name: y, label: Position Y (%), widget: number, value_type: int }
+              - name: projectId
+                label: Projet ouvert par la bulle
+                widget: relation
+                collection: projects
+                search_fields: [name]
+                display_fields: [name]
+                value_field: "{{slug}}"
+          - name: edges
+            label: Liaisons entre bulles
+            widget: list
+            fields:
+              - { name: from, label: De (identifiant de bulle), widget: string }
+              - { name: to, label: Vers (identifiant de bulle), widget: string }

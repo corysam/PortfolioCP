@@ -71,10 +71,32 @@ Tout se modifie dans `content/`, sans toucher au code :
 | `content/recommendations.json` | Témoignages |
 | `content/profile.json` | Identité, coordonnées, CV, texte « About » |
 
-Le contenu est **validé au build** : un champ manquant, un `status` inconnu ou une
-bulle pointant vers un projet inexistant fait échouer `npm run build` avec un message
-explicite, plutôt que de casser la page en production. Une liaison (`edges`) vers une
-bulle inconnue est simplement ignorée, avec un avertissement.
+Le contenu est **validé au build**, à trois niveaux :
+
+- Une bulle du Laboratory pointant vers un projet inexistant fait **échouer**
+  `npm run build` avec un message explicite, plutôt que de casser la page en production.
+- Une liaison (`edges`) vers une bulle inconnue est **ignorée**, avec un avertissement.
+- Un champ de projet absent ou un `status` libre sont **tolérés** : la carte n'affiche
+  simplement rien, et la pastille prend une couleur neutre. Le site doit rester
+  constructible pendant la rédaction ; c'est `npm run check:content` qui les signale.
+
+Les fichiers `stack.json`, `recommendations.json` et les arêtes de `lab.json` portent
+une enveloppe (`rows`, `items`, `{ from, to }`) pour que le CMS sache les adresser.
+C'est un détail de stockage : `lib/content.ts` la retire à la lecture et renvoie les
+mêmes types qu'avant.
+
+### Éditer sans checkout
+
+`/admin/` sert **Sveltia CMS** : une interface d'édition qui écrit directement dans
+les fichiers ci-dessus via l'API GitHub, et déclenche donc le workflow de déploiement
+comme n'importe quel commit.
+
+La connexion se fait par **« Sign In with Token »**, avec un
+[*fine-grained PAT*](https://github.com/settings/personal-access-tokens) limité au seul
+dépôt `corysam.github.io` et disposant de la permission *Contents: Read and write*.
+Le jeton ne vit que dans le navigateur — rien n'est stocké dans le dépôt, et
+`public/admin/` ne contient aucun secret. La page est en `noindex` et n'est liée
+depuis nulle part sur le site.
 
 ### Avant de publier
 
