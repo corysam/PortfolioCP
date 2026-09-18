@@ -100,6 +100,13 @@ collections:
             widget: list
             fields:
               - { name: id, label: Identifiant, widget: string }
+              - name: source
+                label: Plateforme d'origine
+                widget: select
+                default: linkedin
+                options:
+                  - { label: LinkedIn, value: linkedin }
+                  - { label: Malt, value: malt }
               - { name: name, label: Nom, widget: string }
               - { name: role, label: Rôle, widget: string }
               - { name: text, label: Texte, widget: text }

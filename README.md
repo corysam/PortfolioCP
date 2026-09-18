@@ -68,7 +68,7 @@ Tout se modifie dans `content/`, sans toucher au code :
 | `content/projects/*.md` | Un fichier Markdown par projet (frontmatter) |
 | `content/lab.json` | Bulles et liaisons de la section Laboratory |
 | `content/stack.json` | Catégories et technologies |
-| `content/recommendations.json` | Témoignages |
+| `content/recommendations.json` | Témoignages et leur plateforme d'origine (LinkedIn ou Malt) |
 | `content/profile.json` | Identité, coordonnées, CV, texte « About » |
 
 Le contenu est **validé au build**, à trois niveaux :
