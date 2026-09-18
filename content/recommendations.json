@@ -4,8 +4,22 @@
       "id": "r1",
       "source": "linkedin",
       "name": "Fabrice Touzet",
-      "role": "Développeur FullStack",
+      "role": "Directeur D'agence / Manager",
       "text": "Impliqué, volontaire et d'excellente composition, Clément a été un collaborateur de choix avec qui il a fait bon vivre. Sa sociabilité et sa participation à la vie d'agence sont de sérieux atouts, qui viennent compléter une appétence technique certaine et une curiosité à l'égard de la tech très poussée.\nC'est donc avec plaisir que je le recommande pour un futur employeur."
+    },
+    {
+      "id": "2",
+      "source": "malt",
+      "name": "Dominique",
+      "role": "Président Association Carquefou Echecs",
+      "text": "Je suis président  l'association Carquefou Echecs depuis 7 ans, et le site que j'avais conçu moi-même il y a 14 ans commençait à être sérieusement vieillissant.\nJ'ai donc souhaité confié une refonte à l'état de l'art des technos font end à Clément Pellat, qui avec Epitech a une formation complète d'expert en développement, ce qu'il m'a prouvé en me proposant des écrans Figma pour le design du site, puis le framwork Strapi adapté à mon environnement.\nJe recommande vivement Clément Pellat pour tout travaux de développement, comme il a une vision très transverse de tout type de développement (il est Full Stack), avec du conseil aussi dans la phase UI: il est très à l'écoute de mes besoins et souhaits, ce qui était important pour moi pour avoir un résultat adapté à mon assocation."
+    },
+    {
+      "id": "r3",
+      "source": "malt",
+      "name": "Olivier",
+      "role": "Co-fondateur Data-Inceptio",
+      "text": "Super développeur d'agents IA sous Swiftask et IA Souveraine"
     }
   ]
 }
