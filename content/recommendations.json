@@ -2,27 +2,9 @@
   "items": [
     {
       "id": "r1",
-      "name": "Nom Prénom",
-      "role": "Role - Entreprise - Client",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum."
-    },
-    {
-      "id": "r2",
-      "name": "Nom Prénom",
-      "role": "Role - Entreprise - Client",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum."
-    },
-    {
-      "id": "r3",
-      "name": "Nom Prénom",
-      "role": "Role - Entreprise - Client",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum."
-    },
-    {
-      "id": "r4",
-      "name": "Nom Prénom",
-      "role": "Role - Entreprise - Client",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum."
+      "name": "Fabrice Touzet",
+      "role": "Développeur FullStack",
+      "text": "Impliqué, volontaire et d'excellente composition, Clément a été un collaborateur de choix avec qui il a fait bon vivre. Sa sociabilité et sa participation à la vie d'agence sont de sérieux atouts, qui viennent compléter une appétence technique certaine et une curiosité à l'égard de la tech très poussée.\nC'est donc avec plaisir que je le recommande pour un futur employeur."
     }
   ]
 }
