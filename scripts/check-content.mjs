@@ -71,7 +71,23 @@ if (fs.existsSync(labPath)) {
   }
 }
 
-// 4. Projets : champs de frontmatter encore vides. Le build les tolère
+// 4. Recommandations : source manquante ou inconnue → badge masqué sur la carte.
+const KNOWN_SOURCES = ["linkedin", "malt"];
+const recoPath = path.join(contentDir, "recommendations.json");
+if (fs.existsSync(recoPath)) {
+  const reco = JSON.parse(fs.readFileSync(recoPath, "utf8"));
+  for (const item of reco.items ?? []) {
+    const source = String(item?.source ?? "").trim();
+    if (!KNOWN_SOURCES.includes(source)) {
+      report(
+        "content/recommendations.json",
+        `"${item?.id}" : source ${source ? `"${source}" inconnue` : "absente"} — badge masqué (connues : ${KNOWN_SOURCES.join(" | ")})`
+      );
+    }
+  }
+}
+
+// 5. Projets : champs de frontmatter encore vides. Le build les tolère
 // (la carte n'affiche simplement rien) — c'est ce rapport qui les rappelle.
 const PROJECT_FIELDS = [
   "name",

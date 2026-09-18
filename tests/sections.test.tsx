@@ -72,4 +72,10 @@ describe("Sections — contenu", () => {
     expect(screen.getByText("Alice")).toBeInTheDocument();
     expect(screen.getByText("Très bon travail.")).toBeInTheDocument();
   });
+
+  it("Recommendations affiche un badge par plateforme d'origine", () => {
+    render(<Recommendations items={recommendations} />);
+    expect(screen.getByText("LinkedIn")).toBeInTheDocument();
+    expect(screen.getByText("Malt")).toBeInTheDocument();
+  });
 });

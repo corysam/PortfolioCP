@@ -210,7 +210,7 @@ describe("loaders JSON", () => {
   it("lit stack, recommendations et profile", () => {
     const dir = makeContentDir({
       "stack.json": JSON.stringify({ rows: [{ label: "Back End", accent: "green", items: ["Node.js"] }] }),
-      "recommendations.json": JSON.stringify({ items: [{ id: "r1", name: "Alice", role: "CTO", text: "Top." }] }),
+      "recommendations.json": JSON.stringify({ items: [{ id: "r1", source: "linkedin", name: "Alice", role: "CTO", text: "Top." }] }),
       "profile.json": JSON.stringify({ name: "Test", resume: null }),
     });
     expect(getStack(dir)[0].items).toEqual(["Node.js"]);

@@ -19,6 +19,8 @@
   --color-status-yellow: #facc15;
   --color-status-red: #f87171;
   --color-status-violet: #a78bfa;
+  --color-brand-linkedin: #0a66c2;
+  --color-brand-malt: #fc5757;
 
   /* Polices injectées par next/font dans layout.tsx */
   --font-display: var(--font-tomorrow);

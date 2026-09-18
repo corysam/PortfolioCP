@@ -2,6 +2,7 @@
   "items": [
     {
       "id": "r1",
+      "source": "linkedin",
       "name": "Fabrice Touzet",
       "role": "Développeur FullStack",
       "text": "Impliqué, volontaire et d'excellente composition, Clément a été un collaborateur de choix avec qui il a fait bon vivre. Sa sociabilité et sa participation à la vie d'agence sont de sérieux atouts, qui viennent compléter une appétence technique certaine et une curiosité à l'égard de la tech très poussée.\nC'est donc avec plaisir que je le recommande pour un futur employeur."

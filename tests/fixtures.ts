@@ -61,7 +61,8 @@ export const stack: StackRow[] = [
 ];
 
 export const recommendations: Recommendation[] = [
-  { id: "r1", name: "Alice", role: "CTO", text: "Très bon travail." },
+  { id: "r1", source: "linkedin", name: "Alice", role: "CTO", text: "Très bon travail." },
+  { id: "r2", source: "malt", name: "Bob", role: "Product Owner", text: "Mission au top." },
 ];
 
 /** Projet tout juste créé : seul le fichier existe, aucun champ n'est rempli. */

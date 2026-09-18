@@ -45,7 +45,16 @@ export type Lab = { nodes: LabNode[]; edges: [string, string][] };
 
 export type StackRow = { label: string; accent: AccentName; items: string[] };
 
-export type Recommendation = { id: string; name: string; role: string; text: string };
+/** Plateforme d'où provient un témoignage — pilote le badge de la carte. */
+export type RecommendationSource = "linkedin" | "malt";
+
+export type Recommendation = {
+  id: string;
+  name: string;
+  role: string;
+  text: string;
+  source: RecommendationSource;
+};
 
 export type Profile = {
   name: string;
@@ -73,6 +82,12 @@ export const ACCENT_COLORS: Record<AccentName, string> = {
 export const STATUS_ACCENT: Record<KnownProjectStatus, AccentName> = {
   Delivered: "green",
   "In development": "cyan",
+};
+
+/** Couleurs de marque des plateformes de recommandation. */
+export const SOURCE_COLORS: Record<RecommendationSource, string> = {
+  linkedin: "var(--color-brand-linkedin)",
+  malt: "var(--color-brand-malt)",
 };
 
 /** Repli pour un statut libre ou absent : jamais `undefined` dans le CSS. */
