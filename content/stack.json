@@ -3,22 +3,49 @@
     {
       "label": "Back End",
       "accent": "green",
-      "items": ["Node.js", "Nest.js", "TypeScript", "PostgreSQL", "REST API", "Python"]
+      "items": [
+        "Node.js",
+        "Nest.js",
+        "TypeScript",
+        "PostgreSQL",
+        "REST API",
+        "Python"
+      ]
     },
     {
       "label": "Front End",
       "accent": "yellow",
-      "items": ["React", "Next.js", "TypeScript", "Redux", "Tailwind", "Strapi"]
+      "items": [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Redux",
+        "Tailwind",
+        "Strapi"
+      ]
     },
     {
       "label": "IA & Automatisation",
       "accent": "cyan",
-      "items": ["API OpenAI / Anthropic", "Tool calling", "n8n", "Swiftask", "Claude Code"]
+      "items": [
+        "API OpenAI / Anthropic",
+        "Tool calling",
+        "n8n",
+        "Swiftask",
+        "Claude Code"
+      ]
     },
     {
       "label": "Infra & Outils",
-      "accent": "green",
-      "items": ["Docker", "Docker Swarm", "GitLab CI", "Linux", "Bash", "Grafana"]
+      "accent": "red",
+      "items": [
+        "Docker",
+        "Docker Swarm",
+        "GitLab CI",
+        "Linux",
+        "Bash",
+        "Grafana"
+      ]
     }
   ]
 }
